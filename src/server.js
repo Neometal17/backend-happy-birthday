@@ -94,6 +94,18 @@ app.get("/guests", async (req, res) => {
     }
 });
 
+/**
+ * Este para la Actualizacion de los invitados, este seria el JSON
+ * 
+ *  {
+    "id_temp": "67b63481d21e9f366651543d",
+    "nombre": "Juana Vitalvi V0",
+    "invitados": 6,
+    "confirmado": 1
+    }
+ * 
+ */
+
 app.put("/guests", async (req, res) => {
     console.log("Method Put")
     try {
