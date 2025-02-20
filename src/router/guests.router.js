@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const r = Router();
 const port = 3000;
@@ -7,6 +8,9 @@ const uri = "mongodb+srv://minineo:tivoli@happy-birthday-test-clu.ntqpc.mongodb.
 
 const IS_FINE = "Is Fine";
 const IS_NOT_FINE = "Is Not Fine";
+
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 const happyBirthDaySchema = new mongoose.Schema({
     nombre: {type: String, required: true},
@@ -37,7 +41,7 @@ mongoose.connect(uri, {}).then(() => {
     "listaDeseos": "Quiero todo el dinero de la fiesta"
     }
  */
-r.post('/', async (req, res) => {
+r.post('/', (req, res) => {
 
     const { nombre, invitados, codigo, confirmado, buzonDeseos, listaDeseos } = req.body;
     
