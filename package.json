@@ -2,9 +2,9 @@
   "name": "backend-happy-birthday",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "dev": "node src/server.js",
+    "dev-local": "node app.js",
     "build": "vite build",
     "preview": "vite preview"
   },
