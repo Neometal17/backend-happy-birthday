@@ -19,10 +19,7 @@ const happyBirthDaySchema = new mongoose.Schema({
 
 const happyBirthDayModel = mongoose.model('guests', happyBirthDaySchema);
 
-mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
+mongoose.connect(uri, {}).then(() => {
     console.log('Connection success');
 }).catch(error => {
     console.error('Connection fail', error);
