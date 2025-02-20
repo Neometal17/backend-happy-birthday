@@ -8,6 +8,7 @@ app.use('/', guests);
 
 app.all('*', (req, res) => res.status(404).json({message: "route not found"}));
 
+// Demo
 
 app.listen(port, () => {
     console.log(`Server Listen on http://localhost:${port}`);
