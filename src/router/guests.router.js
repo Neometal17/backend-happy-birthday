@@ -82,7 +82,6 @@ r.get("/", async (req, res) => {
     */
 
 r.put("/", async (req, res) => {
-    console.log("Method Put")
     try {
         const {id_temp, nombre, invitados, confirmado} = req.body;
 
@@ -97,6 +96,34 @@ r.put("/", async (req, res) => {
     } catch (error) {
         res.status(500).json({message: IS_NOT_FINE, errorMSG: error});
     }
+});
+
+r.get("/confirmedGuests", async (req, res)=>{
+
+    try {
+        const guestsCode = req.query.code;
+
+        await happyBirthDayModel.updateOne({codigo: guestsCode}, {confirmado: 0}).exec();
+
+        res.status(200).json({message: IS_FINE});
+    } catch (error) {
+        res.status(500).json({message: IS_NOT_FINE, errorMSG: error});
+    }
+ 
+});
+
+r.get("/searchCode", async (req, res)=>{
+
+    try {
+        const guestsCode = req.query.code;
+
+        const hbdOne = await happyBirthDayModel.find({codigo: guestsCode}).exec();
+
+        res.status(200).json(hbdOne);
+    } catch (error) {
+        res.status(500).json({message: IS_NOT_FINE, errorMSG: error});
+    }
+
 });
 
 module.exports = r
