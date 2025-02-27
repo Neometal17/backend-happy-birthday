@@ -119,7 +119,7 @@ r.get("/searchCode", async (req, res)=>{
 
         const hbdOne = await happyBirthDayModel.find({codigo: guestsCode}).exec();
 
-        res.status(200).json(hbdOne);
+        res.status(200).json(hbdOne[0]);
     } catch (error) {
         res.status(500).json({message: IS_NOT_FINE, errorMSG: error});
     }
