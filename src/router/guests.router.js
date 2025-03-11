@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const mongoose = require('mongoose');
+const crypto = require('crypto')
 
 const r = Router();
 const port = 3000;
@@ -39,14 +40,22 @@ mongoose.connect(uri, {}).then(() => {
  */
 r.post('/', async (req, res) => {
 
-    const { nombre, invitados, codigo, confirmado, buzonDeseos, listaDeseos } = req.body;
-    
+    const { nombre, invitados, confirmado, buzonDeseos, listaDeseos } = req.body;
+
+    if (!nombre || !invitados || confirmado === undefined || !buzonDeseos || !listaDeseos ) {
+        return res.status(400).json({message: 'Faltan Parametros en la solicitud'});
+    }
+
     try {
+
+        const codigoHash = crypto.randomBytes(16).toString("hex")
+
+        // console.log(`Codigo: ${codigoHash}`)
 
         const happyBirthDay = new happyBirthDayModel({
             nombre: nombre,
             invitados: invitados,
-            codigo: codigo,
+            codigo: codigoHash,
             confirmado: confirmado,
             buzonDeseos: buzonDeseos,
             listaDeseos: listaDeseos
@@ -54,15 +63,27 @@ r.post('/', async (req, res) => {
 
         const saveHappy = happyBirthDay.save();
         
-        res.status(201).json({message: IS_FINE});
+        return res.status(201).json({message: IS_FINE});
     } catch (error) {
-        res.status(500).json({message: IS_NOT_FINE});
+        console.error(error)
+        return res.status(500).json({message: IS_NOT_FINE});
     }
 });
 
 r.get("/", async (req, res) => {
     try {
-        const hbdAll = await happyBirthDayModel.find({}).exec();
+        const hbdAll = (await happyBirthDayModel.find({}).exec())
+            .map(item => {
+                return {
+                    nombre: item.nombre,
+                    invitados: item.invitados,
+                    codigo: item.codigo,
+                    confirmado: item.confirmado,
+                    buzonDeseos: item.buzonDeseos,
+                    listaDeseos: item.listaDeseos
+                }
+            });
+
         res.status(200).json(hbdAll);
     } catch (error) {
         res.status(500).json({message: IS_NOT_FINE, errorMSG: error});
