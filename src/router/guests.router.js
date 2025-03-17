@@ -9,6 +9,9 @@ const uri = "mongodb+srv://minineo:tivoli@happy-birthday-test-clu.ntqpc.mongodb.
 const IS_FINE = "Is Fine";
 const IS_NOT_FINE = "Is Not Fine";
 
+const CONFIRMED = ""
+const NOT_CONFIRMED = ""
+
 const happyBirthDaySchema = new mongoose.Schema({
     nombre: {type: String, required: true},
     invitados: {type: Number, required: true},
@@ -56,7 +59,7 @@ r.post('/', async (req, res) => {
             nombre: nombre,
             invitados: invitados,
             codigo: codigoHash,
-            confirmado: confirmado,
+            confirmado: NOT_CONFIRMED,
             buzonDeseos: buzonDeseos,
             listaDeseos: listaDeseos
         });
@@ -112,6 +115,30 @@ r.put("/", async (req, res) => {
         // console.log(JSON.stringify(hbdOne));
 
         await happyBirthDayModel.updateOne({_id: id_temp}, {nombre, invitados, confirmado})
+
+        res.status(200).json({message: IS_FINE});
+    } catch (error) {
+        res.status(500).json({message: IS_NOT_FINE, errorMSG: error});
+    }
+});
+
+/**
+ * Se actualizacion del estado de la confirmacion por medio de "Codigo" 
+ * 
+ *  {
+    "codigo": "67b63481d21e9f366651543d"
+    "confirmado": 1
+    }
+    * 
+    */
+
+r.put("/confirmedGuest", async (req, res) => {
+    try {
+        const {codigo, confirmado} = req.body;
+
+        console.log(`${codigo} - ${confirmado}`);
+
+        await happyBirthDayModel.updateOne({_id: codigo}, {confirmado})
 
         res.status(200).json({message: IS_FINE});
     } catch (error) {
