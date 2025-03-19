@@ -134,9 +134,10 @@ r.put("/", async (req, res) => {
 
 r.put("/confirmedGuest", async (req, res) => {
     try {
-        const {codigo, confirmado} = req.body;
+        const {codigo} = req.body;
+        const confirmado = 1;
 
-        console.log(`${codigo} - ${confirmado}`);
+        console.log(`${codigo}`);
 
         await happyBirthDayModel.updateOne({_id: codigo}, {confirmado})
 
