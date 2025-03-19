@@ -127,7 +127,6 @@ r.put("/", async (req, res) => {
  * 
  *  {
     "codigo": "67b63481d21e9f366651543d"
-    "confirmado": 1
     }
     * 
     */
@@ -139,7 +138,7 @@ r.put("/confirmedGuest", async (req, res) => {
 
         console.log(`${codigo}`);
 
-        await happyBirthDayModel.updateOne({_id: codigo}, {confirmado})
+        await happyBirthDayModel.updateOne({codigo: codigo}, {confirmado})
 
         res.status(200).json({message: IS_FINE});
     } catch (error) {
