@@ -5,9 +5,15 @@ const saveGuest = require('../business/saveGuest')
 const updateGuest = require('../business/updateGuest')
 const updateConfirmedGuest = require('../business/updateConfirmedGuest')
 const getGuestForCode = require('../business/getGuestForCode')
+const loadExcel = require('../business/loadExcel')
 
 const r = Router();
 const port = 3000;
+
+
+r.get("/", getAllGuests);
+
+r.get("/searchCode", getGuestForCode);
 
 /**
  * Este endpoint crear invitados (guests) con el siguiente JSON
@@ -22,8 +28,6 @@ const port = 3000;
  */
 r.post('/', saveGuest);
 
-r.get("/", getAllGuests);
-
 /**
  * Este para la Actualizacion de los invitados, este seria el JSON
  * 
@@ -35,7 +39,6 @@ r.get("/", getAllGuests);
     }
     * 
     */
-
 r.put("/", updateGuest);
 
 /**
@@ -46,9 +49,13 @@ r.put("/", updateGuest);
     }
     * 
     */
-
 r.put("/confirmedGuest", updateConfirmedGuest);
 
-r.get("/searchCode", getGuestForCode);
+
+/**
+ * Piloto para leer Excel desde Google Scheets y realizar la carga de los Invitados
+ * para pasarlos a la BD Mongo
+ */
+r.get("/loadExcel", loadExcel)
 
 module.exports = r
