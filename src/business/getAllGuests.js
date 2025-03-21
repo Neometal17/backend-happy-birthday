@@ -1,5 +1,5 @@
-const happyBirthDayModel = require('../models')
-const Utils = require('../utils/utils')
+import happyBirthDayModel from '../models.js'
+import Utils from '../utils/utils.js'
 
 const getAllGuests = async (req, res) => {
     try {
@@ -21,4 +21,4 @@ const getAllGuests = async (req, res) => {
     }
 }
 
-module.exports = getAllGuests
+export default getAllGuests

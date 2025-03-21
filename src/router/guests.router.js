@@ -1,15 +1,13 @@
-const { Router } = require('express');
+import { Router } from 'express'
 
-const getAllGuests = require('../business/getAllGuests')
-const saveGuest = require('../business/saveGuest')
-const updateGuest = require('../business/updateGuest')
-const updateConfirmedGuest = require('../business/updateConfirmedGuest')
-const getGuestForCode = require('../business/getGuestForCode')
-const loadExcel = require('../business/loadExcel')
+import getAllGuests from '../business/getAllGuests.js'
+import saveGuest from '../business/saveGuest.js'
+import updateGuest from '../business/updateGuest.js'
+import updateConfirmedGuest from '../business/updateConfirmedGuest.js'
+import getGuestForCode from '../business/getGuestForCode.js'
+import loadExcel from '../business/loadExcel.js'
 
 const r = Router();
-const port = 3000;
-
 
 r.get("/", getAllGuests);
 
@@ -58,4 +56,4 @@ r.put("/confirmedGuest", updateConfirmedGuest);
  */
 r.get("/loadExcel", loadExcel)
 
-module.exports = r
+export default r

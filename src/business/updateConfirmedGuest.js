@@ -1,5 +1,5 @@
-const happyBirthDayModel = require('../models')
-const Utils = require('../utils/utils')
+import happyBirthDayModel from '../models.js'
+import Utils from '../utils/utils.js'
 
 const updateConfirmedGuest = async (req, res) => {
     try {
@@ -15,4 +15,4 @@ const updateConfirmedGuest = async (req, res) => {
     }
 }
 
-module.exports = updateConfirmedGuest
+export default updateConfirmedGuest

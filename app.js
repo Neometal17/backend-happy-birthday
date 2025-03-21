@@ -1,6 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-const guests = require('./src/router');
+import express from 'express'
+import cors from 'cors'
+import guests from './src/router/index.js'
 
 const app = express();
 const port = 3000;
@@ -20,4 +20,4 @@ app.listen(port, () => {
     console.log(`Server Listen on http://localhost:${port}`);
 });
 
-module.exports = app;
+export default app

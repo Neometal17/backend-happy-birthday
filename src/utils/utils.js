@@ -5,4 +5,4 @@ const Utils = {
     GUEST_NOT_CONFIRMED: 0
 }
 
-module.exports = Utils
+export default Utils

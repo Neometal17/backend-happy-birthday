@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from 'mongoose'
 
 const happyBirthDaySchema = new mongoose.Schema({
     nombre: {type: String, required: true},
@@ -9,4 +9,4 @@ const happyBirthDaySchema = new mongoose.Schema({
     listaDeseos: {type: String, required: true},
 })
 
-module.exports = happyBirthDaySchema
+export default happyBirthDaySchema

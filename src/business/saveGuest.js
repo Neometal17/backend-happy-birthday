@@ -1,6 +1,6 @@
-const happyBirthDayModel = require('../models')
-const crypto = require('crypto')
-const Utils = require('../utils/utils')
+import happyBirthDayModel from '../models.js'
+import crypto from 'crypto'
+import Utils from '../utils/utils.js'
 
 const saveGuest = async (req, res) => {
 
@@ -34,4 +34,4 @@ const saveGuest = async (req, res) => {
     }
 }
 
-module.exports = saveGuest
+export default saveGuest

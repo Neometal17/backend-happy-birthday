@@ -1,8 +1,8 @@
-const { Readable } = require('stream');
-const happyBirthDayModel = require('../models')
-const crypto = require('crypto')
-const Utils = require('../utils/utils')
-const csv = require('csv-parser')
+import { Readable } from 'stream'
+import crypto from 'crypto'
+import csv from 'csv-parser'
+import happyBirthDayModel from '../models.js'
+import Utils from '../utils/utils.js'
 
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/<public-id>/pub?output=csv' //Esto se va a un archivo de entorno
 const SHEET_ID = '2PACX-1vQ1A8EXQXuBh-c-PBZzXpLsmeHFTFjNrv2XHUh5bbk3qnX-bW3DtLROLzagYczkOnHHzyB85UCsEjLr'
@@ -61,4 +61,4 @@ const loadExcel = async (req, res) => {
       }
 }
 
-module.exports = loadExcel
+export default loadExcel

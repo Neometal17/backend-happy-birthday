@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const happyBirthDaySchema = require('./schemas.js')
+import mongoose from 'mongoose'
+import happyBirthDaySchema from './schemas.js'
 
 const uri = "mongodb+srv://minineo:tivoli@happy-birthday-test-clu.ntqpc.mongodb.net/happy-birth-day-app"
 
@@ -11,4 +11,4 @@ mongoose.connect(uri, {}).then(() => {
     console.error('Connection fail', error)
 })
 
-module.exports = happyBirthDayModel
+export default happyBirthDayModel
