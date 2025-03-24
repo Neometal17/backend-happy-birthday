@@ -3,7 +3,7 @@ import cors from 'cors'
 import guests from './src/router/index.js'
 import envUtils from './src/utils/env.middeware.js'
 
-// console.log(`Variable Entorno: ${envUtils.MESSAGE_V1}`)
+console.log(`Variable Entorno: ${envUtils.MESSAGE_V1}`)
 
 const app = express();
 const port = 3000;
