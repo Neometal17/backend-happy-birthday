@@ -5,9 +5,9 @@ const updateConfirmedGuest = async (req, res) => {
     try {
         const {codigo} = req.body;
 
-        console.log(`${codigo}`);
+        console.log(`Codigo: ${codigo}`);
 
-        await happyBirthDayModel.updateOne({codigo: codigo}, {CONFIRMED})
+        await happyBirthDayModel.updateOne({codigo: codigo}, {confirmado: Utils.GUEST_CONFIRMED})
 
         res.status(200).json({message: Utils.RESPONSE_IS_FINE});
     } catch (error) {
