@@ -6,6 +6,8 @@ import updateGuest from '../business/updateGuest.js'
 import updateConfirmedGuest from '../business/updateConfirmedGuest.js'
 import getGuestForCode from '../business/getGuestForCode.js'
 import loadExcel from '../business/loadExcel.js'
+import updateWishList from '../business/updateWishList.js'
+import updateGiftList from '../business/updateGiftList.js'
 
 const r = Router();
 
@@ -48,6 +50,10 @@ r.put("/", updateGuest);
     * 
     */
 r.put("/confirmedGuest", updateConfirmedGuest);
+
+r.put("/wishList", updateWishList);
+
+r.put("/giftList", updateGiftList);
 
 
 /**
