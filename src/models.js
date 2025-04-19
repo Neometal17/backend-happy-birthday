@@ -3,7 +3,7 @@ import happyBirthDaySchema from './schemas.js'
 
 const uri = "mongodb+srv://minineo:tivoli@happy-birthday-test-clu.ntqpc.mongodb.net/happy-birth-day-app"
 
-const happyBirthDayModel = mongoose.model('guests', happyBirthDaySchema)
+const happyBirthDayModel = mongoose.model('guests_daniela', happyBirthDaySchema)
 
 mongoose.connect(uri, {}).then(() => {
     console.log('Connection success')
