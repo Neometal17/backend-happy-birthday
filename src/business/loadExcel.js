@@ -8,7 +8,6 @@ const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/<public-id>/pub?outp
 const SHEET_ID = '2PACX-1vSOK-4U32qX77JEQqQoQrzjmQJ9lqjVNAO9EYsPpC0ajONV5wkRrTfvMrUtQleKNg'
 
 const loadExcel = async (req, res) => {
-    res.setTimeout(60000); // 1 minuto
 
     try {
         const sheetUrl = SHEET_URL.replaceAll('<public-id>', SHEET_ID)
@@ -36,7 +35,7 @@ const loadExcel = async (req, res) => {
           .on('end', async () => {
 
             for(const newGuest of results) {
-                console.log(`Nombre: ${newGuest.nombre_invitado}`);
+                // console.log(`Nombre: ${newGuest.nombre_invitado}`);
                 const codigoHash = crypto.randomBytes(16).toString("hex")
 
                 const happyBirthDay = new happyBirthDayModel({
