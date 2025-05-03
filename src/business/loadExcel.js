@@ -8,57 +8,49 @@ const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/<public-id>/pub?outp
 const SHEET_ID = '2PACX-1vSV0hu6w43-mITbMGMPBoI3caxMn_iSEh7mFMbVHbpG7l3992ywYXK91RprrCMVig'
 
 const loadExcel = async (req, res) => {
-
-    try {
-        const sheetUrl = SHEET_URL.replaceAll('<public-id>', SHEET_ID)
-    
-        // Descargar el archivo CSV usando fetch
-        const response = await fetch(sheetUrl);
-    
-        if (!response.ok) {
+  try {
+      const sheetUrl = SHEET_URL.replaceAll('<public-id>', SHEET_ID)
+      const response = await fetch(sheetUrl);
+  
+      if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-    
-        const body = await response.text(); // Convertir la respuesta a texto
-    
-        // Convertir el texto en un stream legible para csv-parser
-        const stream = Readable.from(body);
-    
-        const results = [];
-    
-        // Procesar el archivo CSV con csv-parser
-        stream
-          .pipe(csv())
-          .on('data', (row) => {
-            results.push(row); // Agregar cada fila como un objeto JSON
-          })
-          .on('end', async () => {
-
-            for(const newGuest of results) {
-                // console.log(`Nombre: ${newGuest.nombre_invitado}`)]
-                const codigoHash = crypto.randomBytes(16).toString("hex")
-
-                const happyBirthDay = new happyBirthDayModel({
-                    nombre: newGuest.nombre_invitado,
-                    invitados: newGuest.numero_invitados,
-                    codigo: codigoHash,
-                    confirmado: Utils.GUEST_NOT_CONFIRMED,
-                    buzonDeseos: ' ',
-                    listaDeseos: ' '
-                });
-                await happyBirthDay.save();
-            }
-
-            res.status(200).json({ message: 'Data loaded successfully', data: results });
-          })
-          .on('error', (error) => {
-            console.error('Error parsing CSV:', error);
-            res.status(500).json({ error: 'Failed to parse CSV' });
-          });
-      } catch (error) {
-        console.error('Error loading data:', error);
-        res.status(500).json({ error: 'Failed to load data' });
       }
+  
+      const body = await response.text();
+      const stream = Readable.from(body);
+      const results = [];
+  
+      // Procesar el archivo CSV con csv-parser
+      await new Promise((resolve, reject) => {
+          stream
+              .pipe(csv())
+              .on('data', (row) => results.push(row))
+              .on('end', resolve)
+              .on('error', reject);
+      });
+
+      // Preparar los documentos para inserción masiva
+      const bulkDocs = results.map(newGuest => ({
+          nombre: newGuest.nombre_invitado,
+          invitados: newGuest.numero_invitados,
+          codigo: crypto.randomBytes(16).toString("hex"),
+          confirmado: Utils.GUEST_NOT_CONFIRMED,
+          buzonDeseos: ' ',
+          listaDeseos: ' '
+      }));
+
+      // Realizar inserción masiva
+      await happyBirthDayModel.insertMany(bulkDocs, { ordered: false });
+      
+      res.status(200).json({ 
+          message: 'Data loaded successfully', 
+          count: results.length 
+      });
+
+  } catch (error) {
+      console.error('Error loading data:', error);
+      res.status(500).json({ error: 'Failed to load data' });
+  }
 }
 
 export default loadExcel
