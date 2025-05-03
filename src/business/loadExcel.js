@@ -35,7 +35,7 @@ const loadExcel = async (req, res) => {
           .on('end', async () => {
 
             for(const newGuest of results) {
-                // console.log(`Nombre: ${newGuest.nombre_invitado}`)]
+                console.log(`Nombre: ${newGuest.nombre_invitado}`);
                 const codigoHash = crypto.randomBytes(16).toString("hex")
 
                 const happyBirthDay = new happyBirthDayModel({
